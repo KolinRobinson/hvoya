@@ -22,7 +22,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBase: process.env.API_BASE || 'https://teamchallenge-shop.onrender.com',
+      apiBase: process.env.API_BASE || '/proxy',
+      apiTargetBase: 'https://teamchallenge-shop.onrender.com',
     },
   },
   nitro: {
