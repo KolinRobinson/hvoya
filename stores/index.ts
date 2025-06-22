@@ -12,7 +12,7 @@ export const useWebsiteStore = defineStore('website', {
 
       try {
         const data = await $api('/swagger/')
-        this.swaggerData = JSON.parse(JSON.stringify(data))
+        this.swaggerData = structuredClone(data)
         this.loaded = true
       } catch (error) {
         console.warn('[fetchSwagger error]', error)

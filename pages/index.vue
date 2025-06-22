@@ -2,7 +2,9 @@
 import { useWebsiteStore } from '~/stores'
 const website = useWebsiteStore()
 
-await website.fetchSwagger()
+await useAsyncData('swagger', () => website.fetchSwagger(), {
+  server: true,
+})
 </script>
 
 <template>
