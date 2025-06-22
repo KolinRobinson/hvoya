@@ -3,6 +3,9 @@ export default defineEventHandler(async (event) => {
     const query = getQuery(event)
     const config = useRuntimeConfig()
 
+    console.log('[PROXY] Target base:', config.public.apiTargetBase)
+    console.log('[PROXY] Path:', path)
+
     const url = `${config.public.apiTargetBase}/${Array.isArray(path) ? path.join('/') : path}`
 
     const res = await $fetch(url, {
