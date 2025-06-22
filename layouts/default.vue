@@ -1,14 +1,11 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
-<div class="flex flex-col min-h-screen w-screen">
-  <LayoutsHeader />
-  <slot></slot>
-  <LayoutsFooter />
-</div>
+  <div class="flex flex-col min-h-screen w-screen">
+    <LayoutsHeader />
+    <slot></slot>
+    <LayoutsFooter />
+  </div>
 </template>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

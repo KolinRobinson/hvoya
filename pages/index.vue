@@ -1,6 +1,5 @@
 <script setup lang="ts">
-
-import {useWebsiteStore} from "~/stores";
+import { useWebsiteStore } from '~/stores'
 
 const website = useWebsiteStore()
 
@@ -13,6 +12,4 @@ await callOnce(website.testFetch)
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

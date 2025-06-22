@@ -9,7 +9,17 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     'dayjs-nuxt',
     '@nuxt/fonts',
+    'nuxt-schema-org',
   ],
+  app: {
+    head: {
+      title: 'Hvoya - Furniture store',
+      htmlAttrs: {
+        lang: 'en',
+      },
+      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    },
+  },
   components: [
     {
       path: '~/components',
@@ -17,13 +27,13 @@ export default defineNuxtConfig({
     },
   ],
   tailwindcss: {
-    cssPath: [`~/assets/css/tailwind.css`, { injectPosition: "first" }],
+    cssPath: [`~/assets/css/tailwind.css`, { injectPosition: 'first' }],
     config: {},
     viewer: true,
     exposeConfig: false,
     configPath: './tailwind.config.ts',
   },
   image: {
-    dir: 'assets/images'
+    dir: 'assets/images',
   },
 })
