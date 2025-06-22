@@ -20,6 +20,22 @@ export default defineNuxtConfig({
       link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     },
   },
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.API_BASE || 'https://teamchallenge-shop.onrender.com',
+    },
+  },
+  nitro: {
+    devProxy: {
+      '/api': {
+        target: 'https://teamchallenge-shop.onrender.com',
+        changeOrigin: true,
+        prependPath: false,
+        // @ts-expect-error
+        pathRewrite: { '^/api': '' },
+      },
+    },
+  },
   components: [
     {
       path: '~/components',
