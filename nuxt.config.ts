@@ -2,6 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
+  ssr: true,
   modules: [
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
@@ -27,6 +28,7 @@ export default defineNuxtConfig({
     },
   },
   nitro: {
+    preset: 'vercel',
     devProxy: {
       '/api': {
         target: 'https://teamchallenge-shop.onrender.com',
