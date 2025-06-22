@@ -2,14 +2,13 @@
 </script>
 
 <template>
-<div class="main-layout">
+<div class="flex flex-col min-h-screen w-screen">
+  <LayoutsHeader />
   <slot></slot>
+  <LayoutsFooter />
 </div>
 </template>
 
 <style scoped lang="scss">
-.main-layout{
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-}
+
 </style>

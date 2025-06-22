@@ -15,41 +15,38 @@ export default {
     theme: {
         colors: {
             brand: {
-                DEFAULT: '#2C2F3A',
+                DEFAULT: '#000000',
             },
-            grey: {
-                DEFAULT: '#333333', // GREY
-                30: '#D9D9D9', // GREY 30
-                60: '#E4E1DC', // GREY 60
-                300: '#3D3D3D', // GREY 300
-                gradient: '#C6C6C6', // Gradient GREY
+            black: {
+                DEFAULT: '#000000',
             },
             white: {
-                DEFAULT: '#FFFFFF', // WHITE
-                20: '#FAFAFA', // WHITE 20
-                50: '#F3F3F3', // WHITE 50
+                DEFAULT: '#FFFFFF',
             },
-            beje: {
-                30: '#F6F1EB', // BEJE 30
-                500: '#C3B298', // BEJE 500
-                600: '#D4A373', // BEJE 600
-                800: '#BD7F43', // BEJE 800
+            oat: {
+                DEFAULT: '#F5F4F1',
+            },
+            gray: {
+                DEFAULT: '#999999',
+                30: '#EEEEEE',
+                60: '#D0D5DD',
+                90: '#535353'
+            },
+            taupe: {
+                DEFAULT: '#8C7A71',
+                30: '#7A685F',
+            },
+            red: {
+                DEFAULT: '#EE6363',
+            },
+            green: {
+                DEFAULT: '#50B313',
+            },
 
-            },
-            blue: {
-                20: '#C8CED9', // BLUE 20
-                30: '#A189E7', // BLUE 30
-                700: '#2D2C3F', // BLUE 700
-            },
-            pink: {
-                20: '#F0E4E2', // PINK 20
-                30: '#DCA2CC', // PINK 30
-            },
         },
         fontFamily: {
             sans: ['Inter', 'sans-serif'],
-            second: ['Poppins', 'sans-serif'],
-            brand: ['HelveticaNeue', 'sans-serif'],
+            brand: ['Host Grotesk', 'sans-serif'],
         },
         fontSize: {
             // Desktop headings
@@ -62,11 +59,12 @@ export default {
             'lg': '18px',  // text-lg
             'base': '16px', // text-base
             'sm': '14px',   // text-sm
+            'xs': '12px',   // text-xs
         },
         lineHeight: {
             'normal': '1.5',
             'tight': '1.2',
-            '3': '32px', // 3rem for Desktop Headline 3
+            '3': '30px', // 3rem for subtitle
         },
         fontWeight: {
             'normal': '400',
@@ -77,9 +75,9 @@ export default {
         borderRadius: {
             'none': '0',
             'sm': '2px',
-            DEFAULT: '4px', // .rounded (4px)
-            'md': '6px',
-            'lg': '8px',
+            'md': '4px',
+            'lg': '6px',
+            DEFAULT: '8px', // .rounded (8px)
             'xl': '1rem',
             '2xl': '1.5rem',
             'full': '9999px',

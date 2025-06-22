@@ -7,15 +7,23 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxt/image',
     '@vueuse/nuxt',
-    'dayjs-nuxt'
+    'dayjs-nuxt',
+    '@nuxt/fonts',
+  ],
+  components: [
+    {
+      path: '~/components',
+      pathPrefix: true,
+    },
   ],
   tailwindcss: {
     cssPath: [`~/assets/css/tailwind.css`, { injectPosition: "first" }],
     config: {},
     viewer: true,
     exposeConfig: false,
+    configPath: './tailwind.config.ts',
   },
-  runtimeConfig: {
-    apiSecret: process.env.NUXT_BLOG_API_KEY,
-  }
+  image: {
+    dir: 'assets/images'
+  },
 })
