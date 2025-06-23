@@ -1,5 +1,5 @@
 export const useCartStore = defineStore('cart', {
-    state: () => ({}),
-    actions: {},
-    getters: {},
+  state: () => ({}),
+  actions: {},
+  getters: {},
 })

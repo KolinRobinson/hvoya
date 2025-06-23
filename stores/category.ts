@@ -1,5 +1,5 @@
 export const useCategoryStore = defineStore('category', {
-    state: () => ({}),
-    actions: {},
-    getters: {},
+  state: () => ({}),
+  actions: {},
+  getters: {},
 })

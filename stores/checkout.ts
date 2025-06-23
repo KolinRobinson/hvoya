@@ -1,5 +1,5 @@
 export const useCheckoutStore = defineStore('checkout', {
-    state: () => ({}),
-    actions: {},
-    getters: {},
+  state: () => ({}),
+  actions: {},
+  getters: {},
 })

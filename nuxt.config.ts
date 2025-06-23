@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     'dayjs-nuxt',
     '@nuxt/fonts',
     'nuxt-schema-org',
+    'nuxt-icons',
   ],
   app: {
     head: {
@@ -29,15 +30,12 @@ export default defineNuxtConfig({
   },
   nitro: {
     preset: 'vercel',
-    devProxy: {
-      '/api': {
-        target: 'https://teamchallenge-shop.onrender.com',
-        changeOrigin: true,
-        prependPath: false,
-        // @ts-expect-error
-        pathRewrite: { '^/api': '' },
-      },
-    },
+  },
+  svgSprite: {
+    input: './assets/icons/',
+  },
+  image: {
+    dir: 'assets/images',
   },
   components: [
     {
@@ -51,8 +49,5 @@ export default defineNuxtConfig({
     viewer: true,
     exposeConfig: false,
     configPath: './tailwind.config.ts',
-  },
-  image: {
-    dir: 'assets/images',
   },
 })

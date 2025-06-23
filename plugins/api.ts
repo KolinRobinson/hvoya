@@ -8,8 +8,8 @@ export default defineNuxtPlugin(() => {
   }
 
   const $api = async <T = any>(
-      endpoint: string,
-      options: Omit<Parameters<typeof $fetch<T>>[1], 'method' | 'url'> = {}
+    endpoint: string,
+    options: Omit<Parameters<typeof $fetch<T>>[1], 'method' | 'url'> = {}
   ): Promise<T> => {
     const url = joinUrl(config.public.apiBase, endpoint)
 
