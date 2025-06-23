@@ -1,53 +1,54 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2025-05-15',
-  devtools: { enabled: true },
-  ssr: true,
-  modules: [
-    '@nuxtjs/tailwindcss',
-    '@pinia/nuxt',
-    '@nuxt/image',
-    '@vueuse/nuxt',
-    'dayjs-nuxt',
-    '@nuxt/fonts',
-    'nuxt-schema-org',
-    'nuxt-icons',
-  ],
-  app: {
-    head: {
-      title: 'Hvoya - Furniture store',
-      htmlAttrs: {
-        lang: 'en',
-      },
-      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    compatibilityDate: '2025-05-15',
+    devtools: {enabled: true},
+    ssr: true,
+    modules: [
+        '@nuxtjs/tailwindcss',
+        '@pinia/nuxt',
+        '@nuxt/image',
+        '@vueuse/nuxt',
+        'dayjs-nuxt',
+        '@nuxt/fonts',
+        'nuxt-schema-org',
+        'nuxt-icons',
+    ],
+    app: {
+        head: {
+            title: 'Hvoya - Furniture store',
+            htmlAttrs: {
+                lang: 'en',
+            },
+            link: [{rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}],
+        },
     },
-  },
-  runtimeConfig: {
-    public: {
-      apiBase: process.env.API_BASE || '/proxy',
-      apiTargetBase: 'https://teamchallenge-shop.onrender.com',
+    runtimeConfig: {
+        public: {
+            apiBase: process.env.API_BASE || '/proxy',
+            apiTargetBase: 'https://teamchallenge-shop.onrender.com',
+        },
     },
-  },
-  nitro: {
-    preset: 'vercel',
-  },
-  svgSprite: {
-    input: './assets/icons/',
-  },
-  image: {
-    dir: 'assets/images',
-  },
-  components: [
-    {
-      path: '~/components',
-      pathPrefix: true,
+    nitro: {
+        preset: 'vercel',
     },
-  ],
-  tailwindcss: {
-    cssPath: [`~/assets/css/tailwind.css`, { injectPosition: 'first' }],
-    config: {},
-    viewer: true,
-    exposeConfig: false,
-    configPath: './tailwind.config.ts',
-  },
+    // @ts-ignore
+    svgSprite: {
+        input: './assets/icons/',
+    },
+    image: {
+        dir: 'assets/images',
+    },
+    components: [
+        {
+            path: '~/components',
+            pathPrefix: true,
+        },
+    ],
+    tailwindcss: {
+        cssPath: [`~/assets/css/tailwind.css`, {injectPosition: 'first'}],
+        config: {},
+        viewer: true,
+        exposeConfig: false,
+        configPath: './tailwind.config.ts',
+    },
 })
