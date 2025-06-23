@@ -1,8 +1,7 @@
 <script setup lang="ts">
-
 definePageMeta({
-  breadcrumbs: 'Catalogue'
-});
+  breadcrumbs: 'Catalogue',
+})
 </script>
 
 <template>

@@ -4,12 +4,12 @@ const website = useWebsiteStore()
 
 await useAsyncData('swagger', () => website.fetchSwagger(), {
   server: true,
-  lazy: true
+  lazy: true,
 })
 
 definePageMeta({
-  breadcrumbs: 'Home'
-});
+  breadcrumbs: 'Home',
+})
 </script>
 
 <template>

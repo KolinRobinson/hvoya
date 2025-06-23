@@ -22,6 +22,6 @@ export const useWebsiteStore = defineStore('website', {
         this.loaded = false
         return null
       }
-    }
+    },
   },
 })
