@@ -21,6 +21,7 @@ export default {
       },
       white: {
         DEFAULT: '#FFFFFF',
+        30: '#EEEDEA',
       },
       oat: {
         DEFAULT: '#F5F4F1',
@@ -31,15 +32,33 @@ export default {
         60: '#D0D5DD',
         90: '#535353',
       },
+      neutral: {
+        DEFAULT: '#4B4B4B',
+        800: '#4B4B4B',
+        700: '#999999',
+        600: '#E3DFD9',
+        500: '#D3CCC4',
+        400: '#C8C1B9',
+        300: '#EEEEEE',
+        200: '#E0DAD3',
+        150: '#EEEDEA',
+      },
       taupe: {
         DEFAULT: '#8C7A71',
-        30: '#7A685F',
+        30: '#A89F97',
+        60: '#A89588',
+        90: '#7A685F',
+        100: '#62584F',
+        200: '#4E443C',
       },
       red: {
         DEFAULT: '#EE6363',
       },
       green: {
         DEFAULT: '#50B313',
+      },
+      transparent: {
+        DEFAULT: 'rgba(255, 255, 255, 0)',
       },
     },
     fontFamily: {
