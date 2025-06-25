@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="flex flex-col w-screen bg-taupe min-h-[200vh]">
+  <div class="flex flex-col w-screen bg-neutral-150 min-h-[200vh]">
     <LayoutsHeader />
     <main class="pt-10">
       <slot></slot>
