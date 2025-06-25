@@ -1,9 +1,11 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="flex flex-col min-h-screen w-screen">
+  <div class="flex flex-col w-screen bg-taupe min-h-[200vh]">
     <LayoutsHeader />
-    <slot></slot>
+    <main class="pt-10">
+      <slot></slot>
+    </main>
     <LayoutsFooter />
   </div>
 </template>
