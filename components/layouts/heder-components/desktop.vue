@@ -104,7 +104,11 @@ watch(
           </ul>
         </div>
         <div class="flex items-center justify-center w-1/3">
-          <nuxt-img src="submenu_image.png" class="w-full h-auto" alt="Logo"></nuxt-img>
+          <nuxt-img
+            src="submenu_image.png"
+            class="w-full h-auto"
+            alt="Submenu decorate image"
+          ></nuxt-img>
         </div>
       </nav>
     </transition>

@@ -36,7 +36,7 @@ export default defineNuxtConfig({
     input: './assets/icons/',
   },
   image: {
-    dir: 'assets/images',
+    dir: 'public/images',
   },
   components: [
     {
