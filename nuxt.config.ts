@@ -35,10 +35,6 @@ export default defineNuxtConfig({
   svgSprite: {
     input: './assets/icons/',
   },
-  image: {
-    provider: 'ipx',
-    inject: true
-  },
   components: [
     {
       path: '~/components',
