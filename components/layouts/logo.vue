@@ -1,11 +1,21 @@
 <script setup lang="ts">
+const route = useRoute()
 import { gsap } from 'gsap'
 
 onMounted(async () => {
   const { ScrollTrigger } = await import('gsap/ScrollTrigger')
   gsap.registerPlugin(ScrollTrigger)
+  let hasScrolled = false
 
   await nextTick() // потрібно щоб почекати DOM перед інітом сетапа анімації
+
+  window.addEventListener(
+    'scroll',
+    () => {
+      hasScrolled = true
+    },
+    { once: true }
+  )
 
   const paths = gsap.utils.toArray<SVGPathElement>('.logo-letter')
 
@@ -15,9 +25,14 @@ onMounted(async () => {
       start: 'top+=50px top',
       end: 'bottom+=700px center',
       once: true,
-      markers: false, // позначки для калібровки
+      onEnter: () => {
+        hasScrolled = true
+        timeline.play()
+      },
     },
   })
+
+  timeline.pause()
 
   paths.forEach((path, i) => {
     const len = path.getTotalLength()
@@ -52,6 +67,13 @@ onMounted(async () => {
       path.style.fill = 'black'
     })
   }
+
+  // запуск через 2 секунди неактивності
+  setTimeout(() => {
+    if (!hasScrolled) {
+      timeline.play()
+    }
+  }, 2000)
 })
 </script>
 
