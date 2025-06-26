@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .hover-underline-animation {
   display: inline-block;
   position: relative;
