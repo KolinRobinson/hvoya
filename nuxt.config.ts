@@ -4,9 +4,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: true,
   modules: [
+    '@nuxt/image',
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
-    '@nuxt/image',
     '@vueuse/nuxt',
     'dayjs-nuxt',
     '@nuxt/fonts',
@@ -36,7 +36,9 @@ export default defineNuxtConfig({
     input: './assets/icons/',
   },
   image: {
-    dir: 'public/images',
+    provider: 'ipx',
+    dir: 'public/images/',
+    inject: true
   },
   components: [
     {
