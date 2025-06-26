@@ -5,6 +5,8 @@ const router = useRouter()
 const formatSegment = (input: string): string =>
   input.replace(/-/g, ' ').replace(/\b\w/g, str => str.toUpperCase())
 
+const currentBreadcrumb = computed(() => route.meta?.breadcrumbs ?? route.name)
+
 const crumbs = computed(() => {
   let fullPath = ''
   const segments = route.fullPath.substring(1).split('/')
@@ -39,7 +41,11 @@ const crumbs = computed(() => {
             'hover-underline-animation left text-sm',
           ]"
         >
-          {{ crumb.meta?.breadcrumbs || formatSegment(crumb.params?.slug || crumb.name || '') }}
+          {{
+            crumb.meta?.breadcrumbs ||
+            currentBreadcrumb ||
+            formatSegment(crumb.params?.slug || crumb.name || '')
+          }}
         </NuxtLink>
         <nuxt-icon v-if="index < crumbs.length - 1" name="common/arrow" class="mx-1 text-black" />
       </li>
@@ -47,33 +53,4 @@ const crumbs = computed(() => {
   </nav>
 </template>
 
-<style scoped>
-.hover-underline-animation {
-  display: inline-block;
-  position: relative;
-}
-
-.hover-underline-animation::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  transform: scaleX(0);
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: #000000;
-  transition: transform 0.25s ease-out;
-}
-
-.hover-underline-animation:hover::after {
-  transform: scaleX(1);
-}
-
-.hover-underline-animation.left::after {
-  transform-origin: bottom right;
-}
-
-.hover-underline-animation.left:hover::after {
-  transform-origin: bottom left;
-}
-</style>
+<style scoped></style>
