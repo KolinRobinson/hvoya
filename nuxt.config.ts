@@ -37,7 +37,6 @@ export default defineNuxtConfig({
   },
   image: {
     provider: 'ipx',
-    dir: 'public/images/',
     inject: true
   },
   components: [
