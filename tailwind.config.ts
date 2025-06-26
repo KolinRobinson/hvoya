@@ -44,7 +44,7 @@ export default {
         150: '#EEEDEA',
       },
       taupe: {
-        DEFAULT: '#8C7A71',
+        DEFAULT: '#68584F',
         30: '#A89F97',
         60: '#A89588',
         90: '#7A685F',
@@ -115,10 +115,18 @@ export default {
     gap: {
       grid: '20px',
     },
+    screens: {
+      xs: '448px',
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+    },
     container: {
       center: true,
       padding: '20px',
       screens: {
+        xs: '448px',
         sm: '640px',
         md: '768px',
         lg: '1024px',
