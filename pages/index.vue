@@ -13,14 +13,7 @@ definePageMeta({
 </script>
 
 <template>
-  <div>
-    <h1 class="font-brand">Home Page</h1>
-    <nuxt-link to="/catalog">Catalog</nuxt-link>
-    <pre v-if="website.swaggerData">
-    {{ website.swaggerData.swagger }}
-  </pre
-    >
-  </div>
+  <home-page-hero />
 </template>
 
 <style scoped></style>

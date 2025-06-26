@@ -44,7 +44,7 @@ export default {
         150: '#EEEDEA',
       },
       taupe: {
-        DEFAULT: '#8C7A71',
+        DEFAULT: '#68584F',
         30: '#A89F97',
         60: '#A89588',
         90: '#7A685F',
