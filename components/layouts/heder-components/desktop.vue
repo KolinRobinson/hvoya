@@ -105,7 +105,7 @@ watch(
         </div>
         <div class="flex items-center justify-center w-1/3">
           <nuxt-img
-            src="images/submenu_image.png"
+            src="/images/submenu_image.png"
             class="w-full h-auto"
             alt="Submenu decorate image"
           ></nuxt-img>
