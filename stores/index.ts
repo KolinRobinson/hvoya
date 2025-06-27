@@ -12,7 +12,7 @@ export const useWebsiteStore = defineStore('website', {
       const { $api } = useNuxtApp()
 
       try {
-        const data = await $api('/swagger/')
+        const data = await $api('/api/catalog/')
         this.swaggerData = structuredClone(data)
         this.loaded = true
         return this.swaggerData

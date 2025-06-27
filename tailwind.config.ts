@@ -133,6 +133,11 @@ export default {
         xl: '1280px',
       },
     },
+    aspectRatio: {
+      '4/3': '4 / 3',
+      '3/4': '3 / 4',
+      '2/4': '2 / 4',
+    },
   },
   plugins: [],
 } satisfies Config

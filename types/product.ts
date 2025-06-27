@@ -12,10 +12,12 @@ type ColorOption = {
 }
 
 type Product = {
-  id: number
+  id?: number
+  slug: string
+  name: string
   mainImageUrl: string
-  additionImages: AdditionImage[]
-  info: string
+  currency: string
   price: number
-  colors: ColorOption[]
 }
+
+export type Products = Array<Product>

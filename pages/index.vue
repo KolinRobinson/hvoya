@@ -7,6 +7,7 @@ await useAsyncData('swagger', () => website.fetchSwagger(), {
   lazy: true,
 })
 
+
 definePageMeta({
   breadcrumbs: 'Home',
 })
@@ -14,6 +15,7 @@ definePageMeta({
 
 <template>
   <home-page-hero />
+  <home-page-arrivals />
 </template>
 
 <style scoped></style>
