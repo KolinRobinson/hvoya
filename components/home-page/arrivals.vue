@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {Splide, SplideSlide} from '@splidejs/vue-splide'
+import { Splide, SplideSlide } from '@splidejs/vue-splide'
 import '@splidejs/vue-splide/css'
-import {useProductStore} from "~/stores/product";
+import { useProductStore } from '~/stores/product'
 
 const productStore = useProductStore()
 
@@ -39,14 +39,13 @@ const options = {
     },
     1024: {
       perPage: 3,
-    }
-  }
+    },
+  },
 }
 
 function goToProduct(productID: string) {
   console.log(productID)
 }
-
 </script>
 
 <template>
@@ -55,37 +54,51 @@ function goToProduct(productID: string) {
       <h2 class="text-2xl font-medium sm:text-3xl xl:text-4xl">New arrivals</h2>
 
       <div class="hidden justify-end gap-[2.5rem] items-center sm:flex">
-        <button @click="goPrev" :disabled="currentSlide === 0" class="btn-prev text-black disabled:text-neutral-700">
+        <button
+          @click="goPrev"
+          :disabled="currentSlide === 0"
+          class="btn-prev text-black disabled:text-neutral-700"
+        >
           <nuxt-icon name="common/left-arrow"></nuxt-icon>
         </button>
-        <button @click="goNext" :disabled="isEnd"
-                class="btn-next text-black disabled:text-neutral-700">
+        <button
+          @click="goNext"
+          :disabled="isEnd"
+          class="btn-next text-black disabled:text-neutral-700"
+        >
           <nuxt-icon name="common/right-arrow"></nuxt-icon>
         </button>
       </div>
     </div>
     <Splide ref="splideRef" :options="options" class="product-carousel">
       <SplideSlide v-for="item in productStore.newArrivalProducts" :key="item.slug">
-        <ProductCard :title="item.name"
-                     :mainImage="item.mainImageUrl"
-                     :currency="item.currency"
-                     :price="item.price"
-                     @click.native="goToProduct(item.slug)"
+        <ProductCard
+          :title="item.name"
+          :mainImage="item.mainImageUrl"
+          :currency="item.currency"
+          :price="item.price"
+          @click.native="goToProduct(item.slug)"
         />
       </SplideSlide>
     </Splide>
 
     <div class="flex justify-end gap-[2.5rem] items-center sm:hidden">
-      <button @click="goPrev" :disabled="currentSlide === 0" class="btn-prev text-black disabled:text-neutral-700">
+      <button
+        @click="goPrev"
+        :disabled="currentSlide === 0"
+        class="btn-prev text-black disabled:text-neutral-700"
+      >
         <nuxt-icon name="common/left-arrow"></nuxt-icon>
       </button>
-      <button @click="goNext" :disabled="isEnd"
-              class="btn-next text-black disabled:text-neutral-700">
+      <button
+        @click="goNext"
+        :disabled="isEnd"
+        class="btn-next text-black disabled:text-neutral-700"
+      >
         <nuxt-icon name="common/right-arrow"></nuxt-icon>
       </button>
     </div>
   </section>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
