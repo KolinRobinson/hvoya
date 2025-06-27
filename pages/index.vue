@@ -14,6 +14,7 @@ definePageMeta({
 
 <template>
   <home-page-hero />
+  <home-page-arrivals />
 </template>
 
 <style scoped></style>
