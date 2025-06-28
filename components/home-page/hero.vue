@@ -2,7 +2,7 @@
 
 <template>
   <section
-    class="w-full h-[calc(100lvh-4rem)] flex flex-col items-center justify-center bg-neutral-150 bg-[url(/images/hero_screen.png)] bg-cover px-2"
+    class="w-full h-[calc(100lvh-4rem)] flex flex-col items-center justify-center bg-neutral-150 bg-[url(/images/hero_screen.png)] bg-cover px-2 lg:px-[3.75rem]"
   >
     <h1
       class="text-white font-brand text-center mb-3 text-xl xs:mb-4 xs:text-2xl sm:text-[38px] md:text-[44px] lg:text-4xl lg:mb-5"
