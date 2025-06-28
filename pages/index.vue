@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useWebsiteStore } from '~/stores'
-const website = useWebsiteStore()
+import { useCategoryStore } from '~/stores/category'
+const categories = useCategoryStore()
 
-await useAsyncData('swagger', () => website.fetchSwagger(), {
+await useAsyncData('swagger', () => categories.fetchMainCategories(), {
   server: true,
   lazy: true,
 })
@@ -15,6 +15,8 @@ definePageMeta({
 <template>
   <home-page-hero />
   <home-page-arrivals />
+  <home-page-categories />
+  <home-page-concept />
 </template>
 
 <style scoped></style>

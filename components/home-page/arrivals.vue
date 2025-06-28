@@ -49,7 +49,7 @@ function goToProduct(productID: string) {
 </script>
 
 <template>
-  <section class="flex flex-col my-5 px-[1.25rem] gap-[2rem]">
+  <section class="flex flex-col mt-5 px-[1.25rem] gap-[2rem] sm:mt-9 xl:mt-15">
     <div class="flex items-center justify-between">
       <h2 class="text-2xl font-medium sm:text-3xl xl:text-4xl">New arrivals</h2>
 

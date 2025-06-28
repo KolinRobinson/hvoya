@@ -1,7 +1,7 @@
-import type { Categories, Category } from '~/types'
+import type { Categories, Category, ApiCategories } from '~/types'
 
 export const useCategoryStore = defineStore('category', {
-  state: (): { categories: Categories } => ({
+  state: (): { categories: Categories; apiCategories: ApiCategories; loaded: boolean } => ({
     categories: [
       {
         id: 'furniture',
@@ -23,8 +23,29 @@ export const useCategoryStore = defineStore('category', {
         ],
       },
     ],
+    apiCategories: [],
+    loaded: false,
   }),
+  actions: {
+    async fetchMainCategories({ force = false } = {}) {
+      console.log('[fetchSwagger] loaded:', this.loaded)
+      if (this.loaded && !force) return this.apiCategories
 
+      const { $api } = useNuxtApp()
+
+      try {
+        const data = await $api('/api/catalog/')
+        this.apiCategories = structuredClone(data.results)
+        this.loaded = true
+        return this.apiCategories
+      } catch (error) {
+        console.warn('[fetchSwagger error]', error)
+        this.apiCategories = null
+        this.loaded = false
+        return null
+      }
+    },
+  },
   getters: {
     categoriesList: (state): Categories => state.categories,
     categoryMeta: state => (routeId: string) => {
@@ -36,5 +57,6 @@ export const useCategoryStore = defineStore('category', {
           }
         : null
     },
+    homeCategoriesList: (state): ApiCategories => state.apiCategories,
   },
 })
