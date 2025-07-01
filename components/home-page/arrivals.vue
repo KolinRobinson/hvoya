@@ -51,7 +51,7 @@ function goToProduct(productID: string) {
 <template>
   <section class="flex flex-col mt-5 px-[1.25rem] gap-[2rem] sm:mt-9 lg:px-[3.75rem] xl:mt-15">
     <div class="flex items-center justify-between">
-      <h2 class="text-2xl font-medium sm:text-3xl xl:text-4xl">New arrivals</h2>
+      <h2 class="text-2xl font-medium sm:text-3xl">New arrivals</h2>
 
       <div class="hidden justify-end gap-[2.5rem] items-center sm:flex">
         <button

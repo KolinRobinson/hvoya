@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="flex flex-col w-full bg-white min-h-[200vh]">
+  <div class="flex flex-col w-full min-h-[100vh] bg-neutral-200">
     <LayoutsHeader />
     <main class="pt-8">
       <slot></slot>

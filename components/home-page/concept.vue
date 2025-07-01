@@ -3,7 +3,7 @@
 <template>
   <section class="flex flex-col my-5 px-[1.25rem] sm:mt-9 xl:mt-15 xl:mb-10 lg:px-[3.75rem]">
     <h2
-      class="text-2xl font-medium mb-[1.25rem] sm:w-2/3 md:w-1/2 lg:text-3xl lg:mb-[3.75rem] xl:text-4xl"
+      class="text-2xl font-medium mb-[1.25rem] sm:w-2/3 md:w-1/2 lg:text-3xl lg:mb-[3.75rem] xl:w-3/5 xl:text-4xl"
     >
       UNIQUE SUSTAINABLE HANDCRAFTED FURNITURE
     </h2>
