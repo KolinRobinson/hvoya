@@ -69,7 +69,7 @@ export default {
       // Desktop headings
       '5xl': '64px', // Desktop Headline 1
       '4xl': '48px', // Desktop Headline 2
-      '3xl': '32px', // Desktop Headline 3
+      '3xl': '36px', // Desktop Headline 3
       '2xl': '24px', // Desktop Headline 4
       xl: '20px', // Desktop Headline 5 and 6
       // Body text
