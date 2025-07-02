@@ -109,9 +109,6 @@ export default {
       }),
       {}
     ),
-    gridTemplateColumns: {
-      '12': 'repeat(12, 80px)', // 12 columns of 80px each with 20px gap
-    },
     gap: {
       grid: '20px',
     },
@@ -135,6 +132,7 @@ export default {
     },
     aspectRatio: {
       '1': '1 / 1',
+      '5/2': '5 / 2',
       '4/3': '4 / 3',
       '2/1': '2 / 1',
       '4/1': '4 / 1',
