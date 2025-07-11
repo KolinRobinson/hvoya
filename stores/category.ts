@@ -1,29 +1,18 @@
-import type { Categories, Category, ApiCategories } from '~/types'
+import type {
+  ApiCategories,
+  ApiSubcategories,
+  ApiCategoryResponse,
+  ApiSubcategoryResponse,
+} from '~/types'
 
 export const useCategoryStore = defineStore('category', {
-  state: (): { categories: Categories; apiCategories: ApiCategories; loaded: boolean } => ({
-    categories: [
-      {
-        id: 'furniture',
-        name: 'Furniture',
-        subcategory: [
-          { id: 'sofas', name: 'Sofas' },
-          { id: 'chairs', name: 'Chairs' },
-          { id: 'tables', name: 'Tables' },
-          { id: 'storage', name: 'Storage' },
-        ],
-      },
-      {
-        id: 'decor',
-        name: 'Decor',
-        subcategory: [
-          { id: 'lamp', name: 'Lamp' },
-          { id: 'mirrors', name: 'Mirrors' },
-          { id: 'sculptures', name: 'Sculptures' },
-        ],
-      },
-    ],
+  state: (): {
+    apiSubcategories: ApiSubcategories
+    apiCategories: ApiCategories
+    loaded: boolean
+  } => ({
     apiCategories: [],
+    apiSubcategories: [],
     loaded: false,
   }),
   actions: {
@@ -34,29 +23,41 @@ export const useCategoryStore = defineStore('category', {
       const { $api } = useNuxtApp()
 
       try {
-        const data = await $api('/api/catalog/')
-        this.apiCategories = structuredClone(data.results)
+        const [categoriesRes, subcategoriesRes] = await Promise.all([
+          $api<ApiCategoryResponse>('/api/catalog/category/'),
+          $api<ApiSubcategoryResponse>('/api/catalog/subcategory/'),
+        ])
+        this.apiCategories = structuredClone(categoriesRes.results)
+        this.apiSubcategories = structuredClone(subcategoriesRes.results)
         this.loaded = true
-        return this.apiCategories
       } catch (error) {
-        console.warn('[fetchSwagger error]', error)
-        this.apiCategories = null
+        console.warn('[fetchInitialCatalog error]', error)
+        this.apiCategories = []
+        this.apiSubcategories = []
         this.loaded = false
-        return null
       }
     },
   },
   getters: {
-    categoriesList: (state): Categories => state.categories,
     categoryMeta: state => (routeId: string) => {
-      const category = state.categories.find((item: Category) => item.id === routeId)
+      if (!state.apiCategories) return null
+      const category = state.apiCategories.find(item => item.slug === routeId)
       return category
         ? {
-            id: category.id,
+            id: category.slug,
             name: category.name,
           }
         : null
     },
     homeCategoriesList: (state): ApiCategories => state.apiCategories,
+    getSubcategoryBySlug: state => (slug: string) => {
+      if (!state.apiSubcategories) return null
+
+      const subcategoriesBySlug = state.apiSubcategories.filter(item => item.category.slug === slug)
+
+      console.log(subcategoriesBySlug)
+
+      return subcategoriesBySlug
+    },
   },
 })

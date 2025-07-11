@@ -133,6 +133,7 @@ export default {
     aspectRatio: {
       '1': '1 / 1',
       '5/2': '5 / 2',
+      '5/3': '5 / 3',
       '4/3': '4 / 3',
       '2/1': '2 / 1',
       '4/1': '4 / 1',
@@ -140,6 +141,11 @@ export default {
       '1/4': '3 / 4',
       '2/4': '2 / 4',
     },
+    safelist: [
+      {
+        pattern: /^border-b-(0|2|black)$/,
+      },
+    ],
   },
   plugins: [],
 } satisfies Config
