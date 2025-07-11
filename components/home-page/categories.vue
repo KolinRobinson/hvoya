@@ -10,8 +10,9 @@ const categories = useCategoryStore()
     <category-card
       v-for="category in categories.homeCategoriesList"
       class="xs:w-1/2"
-      :main-image="category.img"
+      :main-image="category.image_url"
       :title="category.name"
+      :slug="category.slug"
       :key="category.id"
     />
   </section>

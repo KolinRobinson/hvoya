@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { gsap } from 'gsap'
 const route = useRoute()
 const isSubmenuOpened = ref<boolean>(false)
+const submenuImage = ref<string>('/images/submenu_image.png')
 
 import { useCategoryStore } from '~/stores/category'
 
@@ -14,6 +16,56 @@ function closeSubmenu(): void {
   isSubmenuOpened.value = false
 }
 
+function changeSubcategoryImage(url: string): void {
+  const imgEl = document.querySelector('.submenu-img')
+
+  gsap.to(imgEl, {
+    opacity: 0,
+    scale: 0.95,
+    duration: 0.2,
+    onComplete: () => {
+      submenuImage.value = url
+      gsap.fromTo(
+        imgEl,
+        {
+          opacity: 0,
+          scale: 1.05,
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.3,
+        }
+      )
+    },
+  })
+}
+
+function returnSubcategoryImage(): void {
+  const imgEl = document.querySelector('.submenu-img')
+
+  gsap.to(imgEl, {
+    opacity: 0,
+    scale: 0.95,
+    duration: 0.2,
+    onComplete: () => {
+      submenuImage.value = '/images/submenu_image.png'
+      gsap.fromTo(
+        imgEl,
+        {
+          opacity: 0,
+          scale: 1.05,
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.3,
+        }
+      )
+    },
+  })
+}
+
 watch(
   () => route.fullPath,
   newPath => {
@@ -24,7 +76,7 @@ watch(
 
 <template>
   <header
-    class="w-full fixed h-8 px-[3.75rem] py-2 bg-neutral-200 z-10 flex items-center justify-between border-b-black border-b"
+    class="w-full fixed h-8 px-[3.75rem] py-2 bg-neutral-200 z-10 flex items-center justify-between border-b-black border-b lg:px-[3.75rem]"
   >
     <nav class="flex" aria-label="Pages navigation">
       <ul class="flex items-center justify-between text-black text-base font-medium text-center">
@@ -39,7 +91,9 @@ watch(
         </li>
       </ul>
     </nav>
-    <layouts-logo @mouseenter="closeSubmenu"></layouts-logo>
+    <nuxt-link to="/">
+      <layouts-logo @mouseenter="closeSubmenu"></layouts-logo>
+    </nuxt-link>
     <nav class="flex" @mouseenter="closeSubmenu" aria-label="Functional navigation">
       <ul class="flex items-center justify-between text-black text-base font-medium text-center">
         <li class="px-[0.75rem] py-[0.5rem]">
@@ -76,26 +130,30 @@ watch(
           </ul>
           <ul
             class="text-base text-black"
-            v-for="category in categoryArray.categoriesList"
+            v-for="category in categoryArray.apiCategories"
             :key="category.id"
           >
             <li class="mb-2 py-[0.75rem]">
               <nuxt-link
+                @mouseenter="changeSubcategoryImage(category.image_url)"
+                @mouseleave="returnSubcategoryImage()"
                 class="hover-underline-animation left"
-                :to="{ name: 'catalog-id', params: { id: category.id } }"
+                :to="{ name: 'catalog-id', params: { id: category.slug } }"
                 >{{ category.name }}
               </nuxt-link>
             </li>
             <li
               class="py-[0.75rem]"
-              v-for="subcategory in category.subcategory"
+              v-for="subcategory in categoryArray.getSubcategoryBySlug(category.slug)"
               :key="subcategory.id"
             >
               <nuxt-link
+                @mouseenter="changeSubcategoryImage(subcategory.image_url)"
+                @mouseleave="returnSubcategoryImage()"
                 class="hover-underline-animation left"
                 :to="{
                   name: 'catalog-id',
-                  params: { id: category.id },
+                  params: { id: category.slug },
                   query: { filter: subcategory.id },
                 }"
                 >{{ subcategory.name }}
@@ -103,10 +161,10 @@ watch(
             </li>
           </ul>
         </div>
-        <div class="flex items-center justify-center w-1/3">
+        <div class="flex items-center justify-center w-1/3 h-">
           <nuxt-img
-            src="/images/submenu_image.png"
-            class="w-full h-auto"
+            :src="submenuImage"
+            class="w-full h-auto aspect-5/3 object-contain submenu-img"
             alt="Submenu decorate image"
           ></nuxt-img>
         </div>
