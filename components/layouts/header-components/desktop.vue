@@ -8,6 +8,8 @@ import { useCategoryStore } from '~/stores/category'
 
 const categoryArray = useCategoryStore()
 
+console.log(categoryArray.apiCategories)
+
 function openSubmenu(): void {
   isSubmenuOpened.value = true
 }
@@ -22,7 +24,7 @@ function changeSubcategoryImage(url: string): void {
   gsap.to(imgEl, {
     opacity: 0,
     scale: 0.95,
-    duration: 0.2,
+    duration: 0.1,
     onComplete: () => {
       submenuImage.value = url
       gsap.fromTo(
@@ -34,7 +36,7 @@ function changeSubcategoryImage(url: string): void {
         {
           opacity: 1,
           scale: 1,
-          duration: 0.3,
+          duration: 0.1,
         }
       )
     },
@@ -138,7 +140,7 @@ watch(
                 @mouseenter="changeSubcategoryImage(category.image_url)"
                 @mouseleave="returnSubcategoryImage()"
                 class="hover-underline-animation left"
-                :to="{ name: 'catalog-id', params: { id: category.slug } }"
+                :to="{ name: 'catalog-category', params: { category: category.slug } }"
                 >{{ category.name }}
               </nuxt-link>
             </li>
@@ -152,8 +154,8 @@ watch(
                 @mouseleave="returnSubcategoryImage()"
                 class="hover-underline-animation left"
                 :to="{
-                  name: 'catalog-id',
-                  params: { id: category.slug },
+                  name: 'catalog-category',
+                  params: { category: category.slug },
                   query: { filter: subcategory.id },
                 }"
                 >{{ subcategory.name }}

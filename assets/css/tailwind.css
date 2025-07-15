@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .hover-underline-animation {
   display: inline-block;
   position: relative;
@@ -32,6 +31,6 @@
   transform-origin: bottom left;
 }
 
-.link-btn{
+.link-btn {
   @apply bg-taupe text-white text-base font-medium px-[1.25rem] py-[0.75rem] hover:bg-taupe-90 active:bg-black focus:bg-taupe-60 disabled:bg-white-30 disabled:text-taupe-30 max-sm:text-base max-sm:px-[1rem] max-sm:py-[0.75rem];
 }

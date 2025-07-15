@@ -17,18 +17,17 @@ export const useCategoryStore = defineStore('category', {
   }),
   actions: {
     async fetchMainCategories({ force = false } = {}) {
-      console.log('[fetchSwagger] loaded:', this.loaded)
       if (this.loaded && !force) return this.apiCategories
 
       const { $api } = useNuxtApp()
 
       try {
         const [categoriesRes, subcategoriesRes] = await Promise.all([
-          $api<ApiCategoryResponse>('/api/catalog/category/'),
-          $api<ApiSubcategoryResponse>('/api/catalog/subcategory/'),
+          $api<ApiCategories>('/api/catalog/category/'),
+          $api<ApiSubcategories>('/api/catalog/subcategory/'),
         ])
-        this.apiCategories = structuredClone(categoriesRes.results)
-        this.apiSubcategories = structuredClone(subcategoriesRes.results)
+        this.apiCategories = structuredClone(categoriesRes)
+        this.apiSubcategories = structuredClone(subcategoriesRes)
         this.loaded = true
       } catch (error) {
         console.warn('[fetchInitialCatalog error]', error)
@@ -41,7 +40,9 @@ export const useCategoryStore = defineStore('category', {
   getters: {
     categoryMeta: state => (routeId: string) => {
       if (!state.apiCategories) return null
+
       const category = state.apiCategories.find(item => item.slug === routeId)
+
       return category
         ? {
             id: category.slug,

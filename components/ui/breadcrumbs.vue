@@ -1,53 +1,42 @@
 <script setup lang="ts">
 const route = useRoute()
-const router = useRouter()
 
-const formatSegment = (input: string): string =>
-  input.replace(/-/g, ' ').replace(/\b\w/g, str => str.toUpperCase())
+const breadcrumbs = computed(() => {
+  const meta = route.meta?.breadcrumbs
 
-const currentBreadcrumb = computed(() => route.meta?.breadcrumbs ?? route.name)
+  const homeCrumb = { label: 'Home', to: '/' }
 
-const crumbs = computed(() => {
-  let fullPath = ''
-  const segments = route.fullPath.substring(1).split('/')
+  if (Array.isArray(meta)) {
+    return [homeCrumb, ...meta]
+  }
 
-  const dynamicCrumbs = segments
-    .map(segment => {
-      if (!segment) return null
-      fullPath += `/${segment}`
-      const resolved = router.resolve(fullPath)
-      return resolved.name ? resolved : null
-    })
-    .filter((rout): rout is ReturnType<typeof router.resolve> => !!rout)
+  if (typeof meta === 'string') {
+    return [homeCrumb, { label: meta, to: route.fullPath }]
+  }
 
-  const homeRoute = router.resolve('/')
-  return [homeRoute, ...dynamicCrumbs]
+  return [homeCrumb, { label: route.name?.toString() ?? 'Page', to: route.fullPath }]
 })
 </script>
 
 <template>
   <nav aria-label="Breadcrumb">
-    <ul class="flex items-center gap-2 text-sm text-beta-gray-150">
-      <li
-        v-for="(crumb, index) in crumbs"
-        :key="crumb.name ?? index"
-        class="flex items-center gap-1"
-      >
+    <ul class="flex items-center gap-2 text-xs sm:text-sm text-beta-gray-150">
+      <li v-for="(crumb, index) in breadcrumbs" :key="crumb.to" class="flex items-center gap-1">
         <NuxtLink
-          :to="crumb.fullPath"
-          :aria-current="index === crumbs.length - 1 ? 'page' : undefined"
+          :to="crumb.to"
+          :aria-current="index === breadcrumbs.length - 1 ? 'page' : undefined"
           :class="[
-            index === crumbs.length - 1 ? 'pointer-events-none text-black' : 'text-gray',
-            'hover-underline-animation left text-sm',
+            index === breadcrumbs.length - 1 ? 'pointer-events-none text-black' : 'text-gray',
+            'hover-underline-animation left',
           ]"
         >
-          {{
-            crumb.meta?.breadcrumbs ||
-            currentBreadcrumb ||
-            formatSegment(crumb.params?.slug || crumb.name || '')
-          }}
+          {{ crumb.label }}
         </NuxtLink>
-        <nuxt-icon v-if="index < crumbs.length - 1" name="common/arrow" class="mx-1 text-black" />
+        <nuxt-icon
+          v-if="index < breadcrumbs.length - 1"
+          name="common/arrow"
+          class="mx-1 text-black"
+        />
       </li>
     </ul>
   </nav>

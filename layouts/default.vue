@@ -1,4 +1,13 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useCategoryStore } from '~/stores/category'
+
+const categories = useCategoryStore()
+
+await useAsyncData('main-categories-data', () => categories.fetchMainCategories(), {
+  server: true,
+  lazy: true,
+})
+</script>
 
 <template>
   <div class="flex flex-col w-full min-h-[100vh] bg-neutral-200">

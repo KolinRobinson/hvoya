@@ -23,7 +23,7 @@ const emailValue = ref<string>('')
             <li v-for="category in categories.apiCategories" :key="category.id">
               <nuxt-link
                 class="hover-underline-animation left"
-                :to="{ name: 'catalog-id', params: { id: category.slug } }"
+                :to="{ name: 'catalog-category', params: { category: category.slug } }"
                 >{{ category.name }}
               </nuxt-link>
             </li>
