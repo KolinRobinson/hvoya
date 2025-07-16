@@ -3,10 +3,17 @@ import { useCategoryStore } from '~/stores/category'
 
 const categories = useCategoryStore()
 
-await useAsyncData('main-categories-data', () => categories.fetchMainCategories(), {
-  server: true,
-  lazy: true,
-})
+await useAsyncData(
+  'main-categories-data',
+  async () => {
+    const data = await categories.fetchMainCategories()
+    return data
+  },
+  {
+    server: true,
+    lazy: true,
+  }
+)
 </script>
 
 <template>

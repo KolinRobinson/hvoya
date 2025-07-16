@@ -1,41 +1,21 @@
 <script setup lang="ts">
-const route = useRoute()
+import { useProductData } from '~/composible/useProductData'
 
-import { useProductStore } from '~/stores/product'
-
-const actualProduct = useProductStore()
-
-const { pending } = await useAsyncData(
-  'single-product-data',
-  async () => {
-    await actualProduct.fetchProductBySlug('0c3b40dd-83f9-4c78-a94f-d5fefc898832')
-  },
-  {
-    server: true,
-  }
-)
-
-const actualColor = ref<string | undefined>()
-
-watchEffect(() => {
-  const colors = actualProduct.actualProduct?.productcolors
-  if (colors?.length) {
-    actualColor.value = colors[0].color_name
-  }
-})
-
+const { product, productColors, actualColor, setActualColor, pending, error } = useProductData()
 console.log('pending', pending)
+console.log(product)
 </script>
 
 <template>
   <section class="pt-3 pb-8 px-[1.25rem]">
     <ui-breadcrumbs class="mb-4"></ui-breadcrumbs>
-    <article>
-      <product-page-carousel
-        v-if="!pending"
-        :images="actualProduct.actualProduct.productcolors"
-        :actual-color="actualColor"
-      />
+    <article v-if="product">
+      <product-page-carousel :images="productColors" :actual-color="actualColor" />
+      <div class="flex flex-col pt-4 gap-[2rem]">
+        <div class="flex flex-col gap-[1.5rem]">
+          <h1 class="text-xl">{{ product.name }}</h1>
+        </div>
+      </div>
     </article>
   </section>
 </template>

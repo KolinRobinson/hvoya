@@ -16,7 +16,7 @@ export const useCategoryStore = defineStore('category', {
     loaded: false,
   }),
   actions: {
-    async fetchMainCategories({ force = false } = {}) {
+    async fetchMainCategories({ force = false } = {}): Promise<ApiCategories> {
       if (this.loaded && !force) return this.apiCategories
 
       const { $api } = useNuxtApp()
@@ -29,11 +29,13 @@ export const useCategoryStore = defineStore('category', {
         this.apiCategories = structuredClone(categoriesRes)
         this.apiSubcategories = structuredClone(subcategoriesRes)
         this.loaded = true
+        return this.apiCategories
       } catch (error) {
         console.warn('[fetchInitialCatalog error]', error)
         this.apiCategories = []
         this.apiSubcategories = []
         this.loaded = false
+        return []
       }
     },
   },

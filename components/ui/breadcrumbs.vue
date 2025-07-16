@@ -1,21 +1,6 @@
 <script setup lang="ts">
-const route = useRoute()
-
-const breadcrumbs = computed(() => {
-  const meta = route.meta?.breadcrumbs
-
-  const homeCrumb = { label: 'Home', to: '/' }
-
-  if (Array.isArray(meta)) {
-    return [homeCrumb, ...meta]
-  }
-
-  if (typeof meta === 'string') {
-    return [homeCrumb, { label: meta, to: route.fullPath }]
-  }
-
-  return [homeCrumb, { label: route.name?.toString() ?? 'Page', to: route.fullPath }]
-})
+import { useBreadcrumbs } from '~/composible/useBreadcrumbs'
+const breadcrumbs = useBreadcrumbs()
 </script>
 
 <template>
