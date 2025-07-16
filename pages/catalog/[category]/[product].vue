@@ -14,6 +14,8 @@ console.log(product)
       <div class="flex flex-col pt-4 gap-[2rem]">
         <div class="flex flex-col gap-[1.5rem]">
           <h1 class="text-xl">{{ product.name }}</h1>
+          <ui-rating-with-reviews :average-rating="product.avg_rating" :review-count="10" />
+          <p class="">{{ product.description }}</p>
         </div>
       </div>
     </article>
