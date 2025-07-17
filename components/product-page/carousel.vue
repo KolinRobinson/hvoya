@@ -48,7 +48,16 @@ watchEffect(async () => {
     mainRef.value.sync(thumbRef.value.splide)
   }
 })
-console.log(props.images)
+
+watch(
+  () => props.actualColor,
+  newColor => {
+    const index = props.images.findIndex(img => img.color_name === newColor)
+    if (index >= 0 && mainRef.value?.go) {
+      mainRef.value.go(index)
+    }
+  }
+)
 </script>
 
 <template>

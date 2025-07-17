@@ -58,8 +58,6 @@ export const useCategoryStore = defineStore('category', {
 
       const subcategoriesBySlug = state.apiSubcategories.filter(item => item.category.slug === slug)
 
-      console.log(subcategoriesBySlug)
-
       return subcategoriesBySlug
     },
   },

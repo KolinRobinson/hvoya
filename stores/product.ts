@@ -42,7 +42,6 @@ export const useProductStore = defineStore('product', {
       try {
         const actualProductRes = await $api(`/api/products/${productSlug}`)
         this.actualProduct = structuredClone(actualProductRes)
-        console.log(this.actualProduct)
         return this.actualProduct
       } catch (error) {
         console.warn('[fetchInitialCatalog error]', error)

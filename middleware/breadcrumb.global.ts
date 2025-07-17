@@ -20,8 +20,6 @@ export default defineNuxtRouteMiddleware(to => {
     const category = categoryStore.categoryMeta(to.params.category)
     const product = productStore.productMeta(to.params.product)
 
-    console.log(category)
-
     to.meta.breadcrumbs = [
       { label: 'Catalogue', to: '/catalog' },
       { label: category?.name ?? 'Category', to: `/catalog/${to.params.category}` },

@@ -12,8 +12,6 @@ function shopsOpen(e: MouseEvent): void {
   }
 }
 
-console.log(categoryArray.apiCategories)
-
 function beforeEnter(el: HTMLElement) {
   el.style.height = '0'
 }

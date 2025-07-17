@@ -8,8 +8,6 @@ import { useCategoryStore } from '~/stores/category'
 
 const categoryArray = useCategoryStore()
 
-console.log(categoryArray.apiCategories)
-
 function openSubmenu(): void {
   isSubmenuOpened.value = true
 }
