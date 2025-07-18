@@ -4,6 +4,7 @@ import RatingStars from './rating-star.vue'
 const props = defineProps<{
   averageRating: number
   reviewCount: number
+  isShowLink: boolean
 }>()
 
 const maxStars = computed(() => Math.floor(props.averageRating))
@@ -25,7 +26,7 @@ const lastStarFill = computed(() => {
         />
       </div>
     </client-only>
-    <nuxt-link to="#reviews" class="underline">
+    <nuxt-link v-if="isShowLink" to="#reviews" class="underline">
       {{ reviewCount + ' ' + (reviewCount > 1 ? 'Reviews' : 'Review') }}
     </nuxt-link>
   </div>

@@ -56,7 +56,10 @@ export interface SingleProduct {
   stock: number | null
   avg_rating: number
   subcategory: SingleProductSubcategory
-  reviews: SingleProductReview[]
+  reviews: {
+    count: number
+    items: SingleProductReview[]
+  }
   productcolors: SingleProductColor[]
   created: string
 }

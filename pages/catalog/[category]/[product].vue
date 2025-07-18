@@ -18,14 +18,18 @@ const filteredColors = computed(() => {
 </script>
 
 <template>
-  <section class="pt-3 pb-8 px-[1.25rem]">
+  <article class="pt-3 pb-8 px-[1.25rem] flex flex-col">
     <ui-breadcrumbs class="mb-4"></ui-breadcrumbs>
-    <article v-if="product">
+    <section v-if="product">
       <product-page-carousel :images="productColors" :actual-color="actualColor" />
       <div class="flex flex-col pt-4 gap-[2rem]">
         <div class="flex flex-col gap-[1.5rem]">
           <h1 class="text-xl">{{ product.name }}</h1>
-          <ui-rating-with-reviews :average-rating="product.avg_rating" :review-count="10" />
+          <ui-rating-with-reviews
+            :average-rating="product.avg_rating"
+            :is-show-link="true"
+            :review-count="10"
+          />
           <p class="">{{ product.description }}</p>
         </div>
         <ui-color-picker :colors="filteredColors" v-model:activeColor="actualColor" />
@@ -61,8 +65,31 @@ const filteredColors = computed(() => {
           </ui-accordion>
         </div>
       </div>
-    </article>
-  </section>
+    </section>
+    <section class="py-3">
+      <h2>Curated Selections</h2>
+    </section>
+    <section class="pt-5" v-if="product" id="reviews">
+      <h2 class="mb-3 font-medium text-xl">Reviews</h2>
+      <div class="flex flex-col gap-[2.5rem]">
+        <div class="flex flex-col gap-[1rem]">
+          <div class="flex gap-[1.25rem]">
+            <p class="font-medium text-2xl">{{ product.avg_rating }}</p>
+            <ui-rating-with-reviews
+              :average-rating="product.avg_rating"
+              :is-show-link="false"
+              :review-count="10"
+            />
+          </div>
+          <p>Based on {{ product.reviews.count }} review</p>
+        </div>
+        <ui-reviews :reviews="product.reviews.items" />
+        <ui-button v-if="product.reviews.count > 5" type="primary" class="w-full"
+          >Write a review</ui-button
+        >
+      </div>
+    </section>
+  </article>
 </template>
 
 <style scoped></style>
