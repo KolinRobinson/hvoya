@@ -1,12 +1,4 @@
 <script setup lang="ts">
-import { useCategoryStore } from '~/stores/category'
-const categories = useCategoryStore()
-
-await useAsyncData('swagger', () => categories.fetchMainCategories(), {
-  server: true,
-  lazy: true,
-})
-
 definePageMeta({
   breadcrumbs: 'Home',
 })

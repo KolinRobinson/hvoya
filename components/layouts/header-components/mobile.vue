@@ -12,8 +12,6 @@ function shopsOpen(e: MouseEvent): void {
   }
 }
 
-console.log(categoryArray.apiCategories)
-
 function beforeEnter(el: HTMLElement) {
   el.style.height = '0'
 }
@@ -90,7 +88,7 @@ watch(
                 <li class="subcategory py-[0.5rem] flex flex-col" @click.once.prevent>
                   <nuxt-link
                     class="hover-underline-animation left"
-                    :to="{ name: 'catalog-id', params: { id: category.slug } }"
+                    :to="{ name: 'catalog-category', params: { category: category.slug } }"
                     >{{ category.name }}
                   </nuxt-link>
                 </li>
@@ -102,8 +100,8 @@ watch(
                   <nuxt-link
                     class="hover-underline-animation left"
                     :to="{
-                      name: 'catalog-id',
-                      params: { id: category.slug },
+                      name: 'catalog-category',
+                      params: { category: category.slug },
                       query: { filter: subcategory.id },
                     }"
                     >{{ subcategory.name }}

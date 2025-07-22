@@ -8,8 +8,10 @@ const isMobile = useMediaQuery('(max-width: 767px)')
 </script>
 
 <template>
-  <Mobile v-if="isMobile" />
-  <Desktop v-else />
+  <ClientOnly>
+    <Mobile v-if="isMobile" />
+    <Desktop v-else />
+  </ClientOnly>
 </template>
 
 <style scoped></style>
