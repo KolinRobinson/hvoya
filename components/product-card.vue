@@ -23,7 +23,7 @@ const props = withDefaults(
       :image="props.mainImage"
       :offers="{
         price: props.price,
-        priceCurrency: props.currency === '$' ? 'USD' : 'UAH',
+        priceCurrency: 'UAH',
         availability: 'https://schema.org/InStock',
       }"
     />

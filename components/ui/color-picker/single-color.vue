@@ -16,12 +16,16 @@ const modelValueProxy = computed({
   get: () => props.modelValue,
   set: (value: string) => emit('update:modelValue', value),
 })
+
+function capitalizeFirstLetter(val: string): string {
+  return String(val).charAt(0).toUpperCase() + String(val).slice(1)
+}
 </script>
 
 <template>
   <label class="flex items-center gap-[1rem]" role="radio">
     <input type="radio" name="colorPicker" :value="colorName" v-model="modelValueProxy" />
-    <span>{{ colorName }}</span>
+    <span class="text-sm">{{ capitalizeFirstLetter(colorName) }}</span>
   </label>
 </template>
 

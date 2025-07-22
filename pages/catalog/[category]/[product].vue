@@ -15,14 +15,68 @@ const filteredColors = computed(() => {
     return true
   })
 })
+
+const route = useRoute()
+const reqURL = useRequestURL()
+
+const fullUrl = computed(() => {
+  return `${reqURL.origin}${route.fullPath}`
+})
 </script>
 
 <template>
-  <article class="pt-3 pb-8 px-[1.25rem] flex flex-col">
-    <ui-breadcrumbs class="mb-4"></ui-breadcrumbs>
-    <section v-if="product">
+  <article class="pt-3 pb-8 px-[1.25rem] flex flex-col lg:px-[3.75rem] lg:pt-5">
+    <!-- Schema.org Product -->
+    <SchemaOrgProduct
+      v-if="product"
+      :name="product.name"
+      :description="product.description"
+      :sku="product.id"
+      :material="product.material"
+      :category="product.subcategory.name"
+      :image="productColors[0].image_url"
+      :brand="{ name: 'Hvoya' }"
+      :offers="{
+        '@type': 'Offer',
+        price: product.price,
+        priceCurrency: 'UAH',
+        availability:
+          product.stock !== null && product.stock > 0
+            ? 'https://schema.org/InStock'
+            : 'https://schema.org/OutOfStock',
+        url: fullUrl,
+      }"
+      :aggregateRating="{
+        '@type': 'AggregateRating',
+        ratingValue: product.avg_rating,
+        reviewCount: product.reviews.count,
+      }"
+      :review="
+        product.reviews.items.map(r => ({
+          '@type': 'Review',
+          reviewRating: {
+            '@type': 'Rating',
+            ratingValue: r.rating,
+          },
+          author: {
+            '@type': 'Person',
+            name: r.user,
+          },
+          reviewBody: r.review_text,
+          datePublished: r.created,
+        }))
+      "
+      :additionalProperty="[
+        { '@type': 'PropertyValue', name: 'Width', value: product.width + 'cm' },
+        { '@type': 'PropertyValue', name: 'Height', value: product.height + 'cm' },
+        { '@type': 'PropertyValue', name: 'Depth', value: product.depth + 'cm' },
+      ]"
+    />
+
+    <ui-breadcrumbs class="mb-4 lg:mb-5"></ui-breadcrumbs>
+    <section v-if="product" class="md:flex md:gap-[1.5rem]">
       <product-page-carousel :images="productColors" :actual-color="actualColor" />
-      <div class="flex flex-col pt-4 gap-[2rem]">
+      <div class="flex flex-col pt-4 gap-[2rem] md:w-2/5 xl:w-2/5">
         <div class="flex flex-col gap-[1.5rem]">
           <h1 class="text-xl">{{ product.name }}</h1>
           <ui-rating-with-reviews

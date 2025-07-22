@@ -19,13 +19,16 @@ const thumbRef = ref()
 const mainOptions = {
   type: 'fade',
   arrows: false,
-  heightRatio: 1.1,
+  heightRatio: 1,
   cover: true,
   focus: 'center',
   pagination: false,
   breakpoints: {
     767: {
       pagination: true,
+    },
+    1024: {
+      heightRatio: 1.1,
     },
   },
 }
@@ -61,7 +64,7 @@ watch(
 </script>
 
 <template>
-  <div class="w-full flex md:w-2/3">
+  <div class="w-full flex md:w-1/2 xl:w-7/12">
     <Splide :options="thumbOptions" ref="thumbRef" class="thumbnail-slider hidden md:block w-11">
       <SplideSlide v-for="(img, i) in images" :key="i">
         <nuxt-img :src="img.image_url" class="w-20 h-20 object-cover cursor-pointer" />
@@ -75,7 +78,7 @@ watch(
       class="w-full h-fit md:ml-3 md:!sticky md:top-8"
     >
       <SplideSlide v-for="(img, i) in images" :key="i" class="">
-        <nuxt-img :src="img.image_url" class="w-full h-auto object-cover aspect-9/10" />
+        <nuxt-img :src="img.image_url" class="w-full h-auto object-cover aspect-9/10 lg:aspect-1" />
       </SplideSlide>
     </Splide>
   </div>
