@@ -1,37 +1,62 @@
 <script setup lang="ts">
-import {ref, computed, onMounted, watch} from 'vue'
+import {ref, computed, watch} from 'vue'
+import {debounce} from 'lodash'
 
-const props = defineProps<{
-  minPriceFromAPI?: number
-  maxPriceFromAPI?: number
-}>()
+//Props
+interface Props {
+  minPriceFromAPI: number
+  maxPriceFromAPI: number
+}
 
-const minValue = ref()
-const maxValue = ref()
-
-const minPercent = ref()
-const maxPercent = ref()
-
-const minRange = ref()
-const maxRange = ref()
-
-const emit = defineEmits<{
+interface Emits {
   'values-changed': [min: number, max: number]
-}>()
+}
 
-const emitValues = () => {
+const props = defineProps<Props>()
+const emit = defineEmits<Emits>()
+
+// Reactive state
+const minValue = ref<number>(props.minPriceFromAPI)
+const maxValue = ref<number>(props.maxPriceFromAPI)
+const minRange = ref<number>()
+const maxRange = ref<number>()
+
+// Constants
+const PADDING_PERCENT = 0.125
+const DEBOUNCE_DELAY = 2000
+
+
+// Debounced emit function
+const debouncedSValue = debounce(() => {
   emit('values-changed', minValue.value, maxValue.value)
-}
+}, DEBOUNCE_DELAY)
 
-const updateSliderStyle = async () => {
-  minPercent.value = ((minValue.value - minRange.value) / (maxRange.value - minRange.value)) * 100
-  maxPercent.value = ((maxValue.value - minRange.value) / (maxRange.value - minRange.value)) * 100
-}
 
-watch(minValue, async (newminValue) => {
+// Watchers
+watch(minValue, (newminValue) => {
   if (newminValue < 0) {
     minValue.value = 0
   }
+  if (newminValue >= maxRange.value) {
+    minValue.value = maxRange.value
+  }
+})
+
+watch(maxValue, (newmaxValue) => {
+  if (newmaxValue > maxRange.value) {
+    maxValue.value = maxRange.value
+  }
+})
+
+// Computed properties
+const minPercent = computed(() => {
+  const range = maxRange.value - minRange.value
+  return ((minValue.value - minRange.value) / range) * 100
+})
+
+const maxPercent = computed(() => {
+  const range = maxRange.value - minRange.value
+  return ((maxValue.value - minRange.value) / range) * 100
 })
 
 const styleSlider = computed(() => {
@@ -41,102 +66,75 @@ const styleSlider = computed(() => {
   };
 })
 
+// Event handlers
 const handleMinChange = () => {
   if (minValue.value >= maxValue.value) {
-    minValue.value = maxValue.value -1
+    minValue.value = minValue.value + 1
     maxValue.value = minValue.value + 1
   }
-  updateSliderStyle()
 }
 const handleMaxChange = () => {
-  if (Number(maxValue.value) <= Number(minValue.value)) {
-      minValue.value = maxValue.value - 1
+  if (maxValue.value <= minValue.value) {
+    minValue.value = maxValue.value - 1
   }
-  updateSliderStyle()
 }
-onBeforeMount(() => {
-  minValue.value = Number(props.minPriceFromAPI)
-  maxValue.value = Number(props.maxPriceFromAPI)
 
-  //making a gap on left and right part of slider symmetrical
+// Initialization start value
+const calculateRanges = () => {
+
+  //making 10% padding of scale on left and right side of the slider for symmetrical view
   const oneHundredPercents = () => {
-    return (maxValue.value - minValue.value) / 0.8
+    return (maxValue.value - minValue.value) / (1 - PADDING_PERCENT)
   }
+  const isPaddingPercentMinus = minValue.value - oneHundredPercents() * PADDING_PERCENT
 
-  minRange.value = minValue.value - oneHundredPercents() * 0.1 < 0 ? 0 : minValue.value - oneHundredPercents() * 0.1
-  maxRange.value = minValue.value - oneHundredPercents() * 0.1 < 0 ? maxValue.value + minValue.value : maxValue.value + oneHundredPercents() * 0.1
+  minRange.value = isPaddingPercentMinus < 0 ? 0 : minValue.value - oneHundredPercents() * PADDING_PERCENT
+  maxRange.value = isPaddingPercentMinus < 0 ? maxValue.value + minValue.value : maxValue.value + oneHundredPercents() * PADDING_PERCENT
+}
 
-  updateSliderStyle()
-})
+calculateRanges()
 
 </script>
 
 <template>
-  <h1>SLIDER</h1>
-  >
-  <div class="container">
-
-    <div class="range-slider" id="rangeSlider"
-         :style="styleSlider"
-    >
-      <input type="range" id="rangeMin" :min="minRange" :max="maxRange" :value="minValue" step="1" v-model="minValue"
-             @input="handleMinChange(); emitValues()">
-      <input type="range" id="rangeMax" :min="minRange" :max="maxRange" :value="maxValue" step="1" v-model="maxValue"
-             @input="handleMaxChange(); emitValues()">
-    </div>
-    <div class="price flex justify-between mt-3">
-      <div
-          class="MinMaxAmount bg-gray-100 border border-gray-300 ml-2  px-6 py-4 text-gray-500 font-medium text-lg flex w-full self-center relative">
-        <div class="absolute left-1 top-1 flex items-center justify-center "><p class="valueMinMax text-nowrap">UAH
-          {{ minValue }}</p></div>
+  <div class="flex w-full justify-center  mt-10 ">
+    <div class="flex flex-col w-[300px] md:w-[364px]">
+      <div class="range-slider w-full" id="rangeSlider"
+           :style="styleSlider"
+      >
+        <input type="range" id="rangeMin" :min="minRange" :max="maxRange" step="1" v-model.number="minValue"
+               @input="handleMinChange(); debouncedSValue()">
+        <input type="range" id="rangeMax" :min="minRange" :max="maxRange" step="1" v-model.number="maxValue"
+               @input="handleMaxChange(); debouncedSValue()">
       </div>
-      <div
-          class="MinMaxAmount bg-gray-100 border border-gray-300 mr-2 px-6 py-4 text-gray-500 font-medium text-lg flex w-full self-center relative">
-        <div class="absolute left-1 top-1 flex items-center justify-center "><p class="valueMinMax text-nowrap">UAH
-          {{ maxValue }}</p></div>
+      <div class="flex justify-between mt-3">
+        <div
+            class="MinMaxAmountFrame bg-gray-100 border border-gray-300 ml-2  px-6 py-4 text-gray-500 font-medium text-lg flex w-full self-center relative">
+          <div class="absolute left-1 top-1"><p class="text-nowrap text-sm text-[#999999] font-['Inter']">UAH
+            {{ Math.floor(minValue) }}</p></div>
+        </div>
+        <div
+            class="MinMaxAmountFrame bg-gray-100 border border-gray-300 mr-2 px-6 py-4 text-gray-500 font-medium text-lg flex w-full self-center relative">
+          <div class="absolute left-1 top-1"><p class="text-nowrap text-sm text-[#999999] font-['Inter']">UAH
+            {{ Math.floor(maxValue) }}</p></div>
+        </div>
       </div>
     </div>
-    <p>props, min {{ minPriceFromAPI }} max {{ maxPriceFromAPI }}</p>
-    <p>Value min {{ minValue }} max {{ maxValue }}</p>
-    <p>Percent, min {{ minPercent }} max {{ maxPercent }}</p>
-    <p>Range, min {{ minRange }} max {{ maxRange }}</p>
   </div>
+
+
 </template>
 
 <style scoped>
 
-body {
-  font-family: Arial, sans-serif;
-  padding: 50px;
-  background: #f5f5f5;
-}
-
-.valueMinMax {
-  font-family: 'Inter';
-  font-size: 14px;
-  color: #999999;
-}
-
-.MinMaxAmount {
+.MinMaxAmountFrame {
   height: 40px;
-  width: 90px;
+  width: 95px;
   border-radius: 10px;
 }
 
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 30px;
-}
-
-.price {
-  width: 300px;
-  margin: 0 auto;
-}
-
 .range-slider {
-  width: 300px;
-  margin: auto;
+  margin: auto 0;
   text-align: center;
   position: relative;
   align-items: center
@@ -170,6 +168,7 @@ body {
   z-index: 1;
 }
 
+
 /* Active range between thumbs */
 .range-slider::after {
   content: '';
@@ -184,25 +183,9 @@ body {
 
 }
 
-input[type=number] {
-  border: 1px solid #ddd;
-  text-align: center;
-  font-size: 1.6em;
-  -moz-appearance: textfield;
-  width: 80px;
-  padding: 5px;
-  border-radius: 4px;
-  margin: 0 10px;
-}
-
 input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
   -webkit-appearance: none;
-}
-
-input[type=number]:invalid,
-input[type=number]:out-of-range {
-  border: 2px solid #ff6347;
 }
 
 input[type=range] {
@@ -267,33 +250,6 @@ input[type=range]::-moz-range-thumb {
   background: white;
   cursor: pointer;
   -moz-appearance: none;
-}
-
-/* Value display */
-.values {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.value-label {
-  font-weight: bold;
-  color: #333;
-}
-
-.current-range {
-  background: #f0f0f0;
-  padding: 10px;
-  border-radius: 5px;
-  margin-top: 20px;
-  font-size: 14px;
-}
-
-h1 {
-  text-align: center;
-  color: #333;
-  margin-bottom: 30px;
 }
 
 </style>
